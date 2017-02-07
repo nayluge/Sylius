@@ -20,3 +20,14 @@ Feature: Browsing taxons tree
         When I want to get children from taxon "Watches"
         Then I should see 2 taxons on the list
         And I should see the taxon named "Digital" and "Analog" in the list
+
+    @api
+    Scenario: Getting taxon tree
+        When I want to get tree
+        Then I should see 6 taxons on the list
+
+    @api
+    Scenario: Getting taxon tree with root code
+        When I want to get tree for root code Watches
+        Then I should see 3 taxons on the list
+        And I should see the taxon named "Watches", "Digital" and "Analog" in the list

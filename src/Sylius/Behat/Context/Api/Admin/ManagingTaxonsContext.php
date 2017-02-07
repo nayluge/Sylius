@@ -71,6 +71,16 @@ final class ManagingTaxonsContext implements Context
     }
 
     /**
+     * @When I want to get tree
+     * @When I want to get tree for root code :rootCode
+     */
+    public function iWantToGetTree($rootCode = null)
+    {
+        $this->client->getCookieJar()->set(new Cookie($this->session->getName(), $this->session->getId()));
+        $this->client->request('GET', '/admin/ajax/taxons/tree', ['rootCode' => $rootCode], [], ['ACCEPT' => 'application/json']);
+    }
+
+    /**
      * @When I want to get taxon root
      */
     public function iWantToGetTaxonRoot()
