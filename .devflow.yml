@@ -1,0 +1,31 @@
+stack:
+  nginx:
+    document_root: web
+    index: app.php
+
+  php:
+    version: 5.6
+    modules:
+      - pdo_mysql
+      - exif
+      - fileinfo
+      - gd
+      - intl
+
+  mysql:
+    version: 5.5
+    user: sylius
+    password: sylius
+    databases:
+      - sylius
+      - sylius_dev
+
+deployment:
+  install:
+    - composer install --prefer-dist --no-interaction --optimize-autoloader
+    - php bin/console sylius:install --no-interaction
+    - npm install
+    - npm run gulp
+    - php bin/console doctrine:schema:update --force
+    - php bin/console sylius:fixtures:load default --no-interaction
+    - mkdir -p var/cache var/logs var/sessions && chown -R www-data:www-data var/cache/ var/logs/ var/sessions/
