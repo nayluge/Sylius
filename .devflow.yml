@@ -14,7 +14,7 @@ stack:
     deployment:
       install:
         - composer install --prefer-dist --no-interaction --optimize-autoloader
-        - php bin/console sylius:install --no-interaction
+        - php -d memory_limit=-1 bin/console sylius:install --no-interaction
         - npm install
         - npm run gulp
         - php bin/console doctrine:schema:update --force
